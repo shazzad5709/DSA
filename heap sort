@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+void swapel(int *a, int *b)
+{
+    int x=*a;
+    *a=*b;
+    *b=x;
+}
+
+void heapify(int a[], int s, int i)
+{
+    int largest = i;
+    int l = 2*i+1;
+    int r = 2*i+2;
+
+    if(l<s && a[l]>a[largest])
+        largest = l;
+    if(r<s && a[r]>a[largest])
+        largest = r;
+
+    if(largest!=i)
+    {
+        swapel(&a[i], &a[largest]);
+        heapify(a, s, largest);
+    }
+}
+
+void heapSort(int a[], int s)
+{
+    for(int i=s/2-1; i>=0; i--)
+        heapify(a, s, i);
+    
+    for(int i=s-1; i>=0; i--)
+    {
+        swapel(&a[0], &a[i]);
+        heapify(a, i, 0);
+    }
+}
+
+void print(int a[], int s)
+{
+    for(int i=0; i<s; i++)
+        cout<<a[i]<<" ";
+}
+
+int main()
+{
+    int a[1000], s;
+    cout<<"Array size: ";
+    cin>>s;
+    for(int i=0; i<s; i++)
+        cin>>a[i];
+    heapSort(a, s);
+    cout<<"Sorted array: ";
+    print(a, s);
+}
